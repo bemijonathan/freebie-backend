@@ -1,0 +1,21 @@
+{
+  "name": "freebie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist",
+    "start": "npm run build && node dist/index.js",
+    "dev": "nodemon --exec npm run restart",
+    "restart": "rimraf dist && npm run start"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "rimraf": "^3.0.2"
+  }
+}
