@@ -11,16 +11,25 @@ const ProductSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'user',
-        required: true
+        // required: true
     },
-    // images: {
-    //     type: [String]
-    // },
+    images: {
+        type: [String]
+    },
     cost: {
         type: Number,
         min: 0,
         required: true,
 
+    },
+    shortDescription:{
+        type:String,
+        minlength:10,
+        maxlength:35,
+        required:true
+    }, 
+    description:{
+       type:String, 
     }
 }, { timestamps: true })
 

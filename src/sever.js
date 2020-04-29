@@ -15,6 +15,4 @@ app.use(bodyparser())
 
 app.use('/api/products', ProductRoutes)
 
-
-
 export default app
