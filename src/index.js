@@ -1,7 +1,6 @@
-const hello = () => {
-    console.log("hey")
-}
+import server from './sever'
 
-hello()
 
-"melody"
+server.listen(4000, ()=> {
+    console.log("the server is listening on port http://localhost:400/api")
+}) 
