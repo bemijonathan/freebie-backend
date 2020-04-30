@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import bodyparser from 'body-parser'
 
 import ProductRoutes from './resources/products/product.routes'
+import OrderRoutes from './resources/orders/orders.route'
 
 mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
 
@@ -14,5 +15,6 @@ app.use(morgan('dev'))
 app.use(bodyparser())
 
 app.use('/api/products', ProductRoutes)
+app.use('/api/orders', OrderRoutes)
 
 export default app

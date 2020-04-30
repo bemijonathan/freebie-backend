@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 
 export const createOne = (model) => async (req, res) => {
     let response;
@@ -6,7 +7,8 @@ export const createOne = (model) => async (req, res) => {
             ...req.body
         })
     } catch (error) {
-        if (error) return res.status(400).end()
+        console.log(chalk.redBright.bold(error))
+        if (error) return res.status(400).json(error)
     }
     res.status(201).send({data:response})
 }

@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
-import deliveryPrices from '../../utils/locationprice'
-
+import {deliveryPrices} from '../../utils/locationprice'
+import chalk from 'chalk'
+import {Product} from '../products/product.model'
 
 const OrderSchema = new mongoose.Schema({
     products:{
-        type:[mongoose.SchemaTypes.ObjectId],
+        type:[{product:mongoose.SchemaTypes.ObjectId, qty:Number}],
         refs:'Product'
     },
     OrderdBy:{
@@ -21,22 +22,46 @@ const OrderSchema = new mongoose.Schema({
         },
         location:{type:String},
         email:{type:String},
-        phoneNumber:{type:String, minLength:9}
+        phoneNumber:{type:String, minLength:9},
+        city:{
+            type:String,
+            required: true,
+            trim: true
+        }
     },
-    ShippingFee:{
+    shippingFee:{
         type:Number,
+        // required:true
+    },
+    shippingLocation:{
+        type:String,
         required:true
     },
-    ShippingLocation:{
-        type:String,
+    total:{
+        type:Number,
+        min:0,
+        // required:true
+    },
+    paid:{
+        type:Boolean,
+        default:false,
         required:true
     }
 })
 
-OrderSchema.pre('save', function(next){
-    this.ShippingFee = deliveryPrices[this.ShippingLocation]
-    if(typeof(this.ShippingFee) === "number"){
-        next()
+OrderSchema.pre('save', async function(next){
+    console.log(chalk.bold.greenBright(this))
+    let ids = this.products.map(e  => mongoose.Types.ObjectId(e.product) )
+    this.shippingFee = deliveryPrices[this.shippingLocation]
+    
+    if(typeof(this.shippingFee) === "number"){
+        const Products = await Product.find({_id: [
+            ...ids
+        ]})
+        let total = Products
+        total.reduce((e , c)=> e.cost + c.cost)
+
+        throw new Error('Another Location')
     }else{
         throw new Error('Did You select a location in our List')
     }
