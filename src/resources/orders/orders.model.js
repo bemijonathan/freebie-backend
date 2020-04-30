@@ -42,6 +42,10 @@ const OrderSchema = new mongoose.Schema({
         min:0,
         // required:true
     },
+    totalBill:{
+        type:Number,
+        min:0
+    },
     paid:{
         type:Boolean,
         default:false,
@@ -53,15 +57,23 @@ OrderSchema.pre('save', async function(next){
     console.log(chalk.bold.greenBright(this))
     let ids = this.products.map(e  => mongoose.Types.ObjectId(e.product) )
     this.shippingFee = deliveryPrices[this.shippingLocation]
-    
     if(typeof(this.shippingFee) === "number"){
         const Products = await Product.find({_id: [
             ...ids
         ]})
-        let total = Products
-        total.reduce((e , c)=> e.cost + c.cost)
-
-        throw new Error('Another Location')
+        let total = Products.map(e => {
+            return {id:e.id, cost:e.cost}
+        })
+        let totalSum = this.products.map(e => {
+            console.log(e.product)
+            let product = total.find(p => {
+                return JSON.stringify(p.id) === JSON.stringify(e.product)
+            })
+            return e.sum = e.qty * product.cost
+        })
+        this.total = totalSum.reduce((e , c)=> e.sum + c.sum)
+        this.totalBill = this.total + this.shippingFee
+        next()
     }else{
         throw new Error('Did You select a location in our List')
     }

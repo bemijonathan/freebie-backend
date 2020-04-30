@@ -4,7 +4,7 @@ import { Product } from './product.model'
 export default {
     ...crudControllers(Product),
     createOne: async (req, res) => {
-        console.log(req.form)
+        console.log(req.body)
         let doc;
         try {
             doc = await Product.create({
