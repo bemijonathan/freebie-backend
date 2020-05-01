@@ -6,6 +6,7 @@ import bodyparser, { urlencoded } from 'body-parser'
 import multer from 'multer'
 import ProductRoutes from './resources/products/product.routes'
 import OrderRoutes from './resources/orders/orders.route'
+import {signup, signin} from './utils/auth'
 
 mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
 
@@ -23,6 +24,10 @@ app.use(bodyparser.json())
 //     console.log(req.file)
 //     res.send({recieved:"files"})
 // })
+
+app.post('/signup', signup)
+app.post('login', signin)
+// app.delete('logout',logout)
 app.use('/api/products', ProductRoutes)
 app.use('/api/orders', OrderRoutes)
 
