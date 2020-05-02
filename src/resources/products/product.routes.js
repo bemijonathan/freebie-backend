@@ -1,10 +1,11 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import Controller from './product.controller'
+import { authenticated } from '../../utils/auth'
 
 const router = Router()
 
 router.route('/')
-    .get(Controller.getMany)
+    .get(authenticated, Controller.getMany)
     .post(Controller.createOne)
 
 router.route('/:id')

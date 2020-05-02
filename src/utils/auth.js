@@ -1,6 +1,7 @@
 import { User } from '../resources/users/users.model';
 import jwt from 'jsonwebtoken';
 import config from './../config/jwt.config'
+import chalk from 'chalk';
 
 const generateToken = (user) => {
     console.log(user)
@@ -50,9 +51,19 @@ export const signin = (req, res) => {
 
 export const authenticated = (req, res, next) => {
     // this middleware will run every time
-    let token = req.header.token
-    token = token.split('Bearer ')[1]
-    let userid = verifyToken(token)
-    req.user = User.findById({_id:userid}).select('email _id')
+    let userid;
+    try {
+        let token = req.headers.token
+        token = token.split('Bearer ')[1]
+
+        userid = verifyToken(token)
+    } catch (error) {
+        console.log(chalk.yellow.bold(error))
+        if (error) {
+            return res.status(401).end()
+        }
+    }
+
+    req.user = User.findById({ _id: userid }).select('email _id')
     next()
 }

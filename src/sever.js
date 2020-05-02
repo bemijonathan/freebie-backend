@@ -3,12 +3,12 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 import bodyparser, { urlencoded } from 'body-parser'
-import multer from 'multer'
 import ProductRoutes from './resources/products/product.routes'
 import OrderRoutes from './resources/orders/orders.route'
-import { signup, signin } from './utils/auth'
-import { multerUploads, dataUri } from './config/multer.config'
-import { cloudinaryConfig, uploader } from './config/clodinary.config'
+import { signup, signin, authenticated } from './utils/auth'
+import ProductUpload from './upload'
+import { multerUploads } from './config/multer.config'
+import { cloudinaryConfig } from './config/clodinary.config'
 
 mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
 
@@ -22,25 +22,9 @@ app.use(cloudinaryConfig)
 // const upload = multer({ dest: './data/uploads/' })
 
 
-app.post('/api/products', multerUploads, async function (req, res, next) {
-    console.log(req.body)
-    console.log(req.files)
-    if (req.files) {
-        let images = []
-        for (const i of req.files ){
-            const file = dataUri(req, i).content;
-            try {
-                const result = await uploader.upload(file)
-                images.push(result.url)
-            } catch (error) {
-                images.push("error occured")
-            }
-        }
-        console.log(images)
-        res.status(201).send({ recieved: images })
-    }
+app.post('/api/products', [authenticated, multerUploads], (req, res) => {
+    ProductUpload(req, res)
 })
-
 app.post('/signup', signup)
 app.post('login', signin)
 // app.delete('logout',logout)
