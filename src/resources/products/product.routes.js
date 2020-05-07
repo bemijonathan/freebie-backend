@@ -5,7 +5,7 @@ import { authenticated } from '../../utils/auth'
 const router = Router()
 
 router.route('/')
-    .get(authenticated, Controller.getMany)
+    .get(Controller.getMany)
     .post(Controller.createOne)
 
 router.route('/:id')

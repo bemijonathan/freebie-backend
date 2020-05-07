@@ -1,7 +1,7 @@
 import { multerUploads, dataUri } from './config/multer.config';
 import { uploader } from './config/clodinary.config';
 
-export async function ProductUpload(req, res) {
+export default async function ProductUpload(req, res, next) {
     console.log(req.body);
     console.log(req.files);
     if (req.files) {
@@ -17,6 +17,9 @@ export async function ProductUpload(req, res) {
             }
         }
         console.log(images);
-        res.status(201).send({ recieved: images });
+        req.images = images
+        next()
+    } else {
+        next()
     }
 }

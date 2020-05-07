@@ -5,19 +5,19 @@ import chalk from 'chalk';
 
 const generateToken = (user) => {
     console.log(user)
-    return jwt.sign({ data: user._id }, config.secret_key, { expiresIn: '24h' });
+    return jwt.sign({ id: user._id }, config.secret_key, { expiresIn: '24h' });
 }
 
 const verifyToken = (token) => {
-    try {
-        jwt.verify(token, config.secret_key, function (err, decoded) {
-            console.log(decoded)
-            return decoded.id
-        });
-    } catch (error) {
-        console.log(error)
-        throw new Error(error)
-    }
+    let id;
+    jwt.verify(token, config.secret_key, function (err, decoded) {
+        if (err) {
+            throw new Error(err)
+        }
+        console.log(decoded)
+        id = decoded.id
+    });
+    return id.toString()
 }
 
 export const signup = async (req, res) => {
@@ -49,21 +49,22 @@ export const signin = (req, res) => {
     // this checks the password and returns a token
 }
 
-export const authenticated = (req, res, next) => {
+export const authenticated = async (req, res, next) => {
     // this middleware will run every time
     let userid;
     try {
         let token = req.headers.token
         token = token.split('Bearer ')[1]
-
-        userid = verifyToken(token)
+        // console.log(verifyToken(token))
+        userid = await verifyToken(token)
+        req.user = await User.findById(userid).select('email _id')
     } catch (error) {
         console.log(chalk.yellow.bold(error))
         if (error) {
             return res.status(401).end()
         }
     }
+    // res.send({ message: "ok" })
 
-    req.user = User.findById({ _id: userid }).select('email _id')
     next()
 }

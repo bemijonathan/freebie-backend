@@ -4,8 +4,12 @@ import bcrypt from 'bcrypt'
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, unique: true, required: true },
-    password: { type: String, unique: true, required: true },
-    photo: { type: String, unique: true }
+    password: { type: String, required: true },
+    photo: { type: String },
+    products: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        ref: 'Product'
+    }
 })
 
 UserSchema.methods.comparePassword = async (password) => {
