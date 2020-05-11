@@ -13,8 +13,15 @@ import { User } from './resources/users/users.model'
 import chalk from 'chalk'
 import { Product } from './resources/products/product.model'
 import usersRoutes from './resources/users/users.routes'
+import { environment } from './config/environment'
 
-mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
+
+if (environment === "DEVELOPMENT") {
+    mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
+} else {
+    mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', { useNewUrlParser: true })
+}
+
 
 const app = express()
 app.use(cors())

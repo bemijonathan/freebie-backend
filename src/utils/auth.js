@@ -4,7 +4,6 @@ import config from './../config/jwt.config'
 import chalk from 'chalk';
 
 const generateToken = (user) => {
-    console.log(user)
     return jwt.sign({ id: user._id }, config.secret_key, { expiresIn: '24h' });
 }
 
@@ -31,11 +30,10 @@ export const signup = async (req, res) => {
             password: req.body.password,
             name: req.body.name
         })
-        console.log(user)
 
         const token = generateToken(user)
 
-        return res.status(201).send({ token, user })
+        return res.status(201).send({ data: token })
 
     } catch (error) {
         console.log(error)

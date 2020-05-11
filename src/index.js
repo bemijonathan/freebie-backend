@@ -1,8 +1,9 @@
 import server from './sever'
 
+const port = process.env.port || 3000
 
-server.listen(4000, () => {
-    console.log("the server is listening on port http://localhost:400/api")
+server.listen(port, () => {
+    console.log("the server is listening on " + port)
 })
 
 
