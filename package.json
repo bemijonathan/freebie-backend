@@ -6,10 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d dist",
-    "start": "npm run build && babel-node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "dev": "nodemon --exec npm run restart",
     "restart": "rimraf dist && npm run start",
-    "heroku-postbuild": "npm install"
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
   },
   "author": "",
   "license": "ISC",
