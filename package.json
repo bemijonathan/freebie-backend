@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d dist",
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && babel-node dist/index.js",
     "dev": "nodemon --exec npm run restart",
     "restart": "rimraf dist && npm run start",
     "heroku-postbuild": "npm install"
