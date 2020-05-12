@@ -8,19 +8,18 @@
     "build": "npx babel src -d dist",
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon --exec npm run restart",
-    "restart": "rimraf dist && npm run start"
+    "restart": "rimraf dist && npm run start",
+    "heroku-postbuild": "npm install && npm run start"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
-    "rimraf": "^3.0.2"
-  },
-  "dependencies": {
+    "rimraf": "^3.0.2",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "chalk": "^4.0.0",
