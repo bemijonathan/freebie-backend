@@ -19,7 +19,12 @@ import { environment } from './config/environment'
 if (environment === "DEVELOPMENT") {
     mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
 } else {
-    mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', { useNewUrlParser: true })
+    mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    })
 }
 
 
