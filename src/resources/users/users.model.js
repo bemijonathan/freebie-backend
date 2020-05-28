@@ -17,8 +17,8 @@ UserSchema.methods.comparePassword = async (password) => {
         const match = await bcrypt.compare(password, this.password);
         return match
     } catch (error) {
-        console.log(error)
-        return error
+        console.error(error)
+        throw new Error(error)
     }
 }
 

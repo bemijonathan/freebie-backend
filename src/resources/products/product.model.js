@@ -20,7 +20,10 @@ const ProductSchema = new mongoose.Schema({
         required: true
     },
     images: {
-        type: [String],
+        type: [{
+            img:String,
+            public_id:String,
+        }],
         required: true
     },
     cost: {

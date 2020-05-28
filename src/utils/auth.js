@@ -38,13 +38,32 @@ export const signup = async (req, res) => {
     } catch (error) {
         console.log(error)
         // if(error.cod)
-        res.status(400).send({ error })
+        res.status(400).send({ error: "email already exists" })
     }
 
 }
 
-export const signin = (req, res) => {
+export const signin = async (req, res) => {
+    const { email, password } = req.body
+
+    let error = { data: "incorrect username or password" }
+
+    const user = await User.findOne({ email: email })
     // this checks the password and returns a token
+    try {
+        if (user) {
+            let compared = await user.comparePassword(password)
+            if (compared) {
+                let token = generateToken(user);
+                res.status(200).send({ data: token })
+            } else return res.status(400).send(error)
+        } else {
+            res.status(400).send(error)
+        }
+    } catch (error) {
+        res.status(400).send(error)
+    }
+
 }
 
 export const authenticated = async (req, res, next) => {

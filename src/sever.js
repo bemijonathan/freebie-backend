@@ -15,21 +15,20 @@ import { Product } from './resources/products/product.model'
 import usersRoutes from './resources/users/users.routes'
 import { environment } from './config/environment'
 
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}
 
 if (environment === "DEVELOPMENT") {
-    mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
+    mongoose.connect('mongodb://localhost/test', options);
 } else {
     try {
-        mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false,
-            useCreateIndex: true
-        })
+        mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', options)
     } catch (error) {
         console.log(chalk.bgGreenBright.bold(error))
     }
-
 }
 
 
@@ -41,7 +40,6 @@ app.use(bodyparser.json())
 app.use(cloudinaryConfig)
 
 // const upload = multer({ dest: './data/uploads/' })
-
 
 app.get('/hello', (req, res) => {
     User.remove({}, () => {
@@ -57,6 +55,7 @@ app.post('/api/products', [authenticated, multerUploads, ProductUpload], async (
             ...req.body, images: req.images, createdBy: req.user.id
         })
 
+        console.log(response)
         const user = await User.findByIdAndUpdate(req.user.id, { $push: { products: response.id } }, { new: true })
         res.status(201).send({ data: response })
     } catch (error) {
@@ -66,7 +65,7 @@ app.post('/api/products', [authenticated, multerUploads, ProductUpload], async (
 })
 
 app.post('/signup', signup)
-app.post('login', signin)
+app.post('/login', signin)
 // app.delete('logout',logout)
 app.use('/api/products', ProductRoutes)
 app.use('/api/orders', OrderRoutes)

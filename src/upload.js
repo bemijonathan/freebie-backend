@@ -10,7 +10,8 @@ export default async function ProductUpload(req, res, next) {
             const file = dataUri(req, i).content;
             try {
                 const result = await uploader.upload(file);
-                images.push(result.url);
+                console.log(result);
+                images.push({img:result.url, public_id:result.public_id});
             }
             catch (error) {
                 images.push("error occured");
