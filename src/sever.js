@@ -14,6 +14,8 @@ import chalk from 'chalk'
 import { Product } from './resources/products/product.model'
 import usersRoutes from './resources/users/users.routes'
 import { environment } from './config/environment'
+import {migrate} from './config/migrations'
+
 
 const options = {
     useNewUrlParser: true,
@@ -66,10 +68,14 @@ app.post('/api/products', [authenticated, multerUploads, ProductUpload], async (
 
 app.post('/signup', signup)
 app.post('/login', signin)
+app.get('/migrate', migrate)
 // app.delete('logout',logout)
 app.use('/api/products', ProductRoutes)
 app.use('/api/orders', OrderRoutes)
 app.use('/api/users', usersRoutes.UserRouter)
+
+
+
 
 export default app
 
