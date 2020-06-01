@@ -25,7 +25,7 @@ GET: http://yourserver/api/products?page=1
 					"id":"5ed007e74c2e14358da8769d",
 					 "img":"http:image url",
 					 "public_id":"zn51zaymevilamrhsldn"
-					}
+					} 
 				 ],
 				 "createdBy":"5ecfd651cc958c255f2412c8",
 				 "createdAt":"2020-05-28T18:50:15.886Z",
