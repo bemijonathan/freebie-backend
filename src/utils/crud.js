@@ -14,9 +14,18 @@ export const createOne = (model) => async (req, res) => {
 }
 
 export const getMany = (model) => async (req, res) => {
-    const docs = await model.find({}).exec()
-    console.log("/")
-    res.status(200).send({ data: docs })
+    try{
+        let page = req.query.page
+        if(req.query.page === 1) page = 0;
+        if(!req.query.page) page = 0        
+        const docs = await model.find({}).skip(+page * 10).limit(10).lean().exec()
+        console.log(docs)
+        console.log(req.query)
+        res.status(200).send({ data: docs, page: page })
+    }catch (error){
+        console.log(error)
+        res.status(400).end
+    }
 }
 
 export const getOne = (model) => async (req, res) => {

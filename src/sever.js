@@ -25,7 +25,7 @@ const options = {
 }
 
 if (process.env.ENVIRONMENT === "DEVELOPEMENT") {
-    mongoose.connect('mongodb://localhost:27017/test', options);
+    mongoose.connect('mongodb://localhost/test', options);
 } else {
     try {
         mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', options)
