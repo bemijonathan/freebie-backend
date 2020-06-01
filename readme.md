@@ -7,10 +7,10 @@ configure your environment variable
 
 # get all Products 
 
-GET : http:yourserver/api/products
+GET : http://yourserver/api/products
 
 pagination
-GET: http:yourserver/api/products?page=1
+GET: http://yourserver/api/products?page=1
 
 ```js
 	{
