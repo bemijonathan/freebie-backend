@@ -1,3 +1,3 @@
 export default {
-    secret_key:"Freebite"
+    secret_key:process.env.JWT_SECRET_KEY
 }

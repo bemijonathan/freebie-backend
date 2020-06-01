@@ -14,8 +14,9 @@ import chalk from 'chalk'
 import { Product } from './resources/products/product.model'
 import usersRoutes from './resources/users/users.routes'
 import { environment } from './config/environment'
-import {migrate} from './config/migrations'
+import dotenv from 'dotenv'
 
+dotenv.config()
 
 const options = {
     useNewUrlParser: true,
@@ -23,8 +24,8 @@ const options = {
     useFindAndModify: false
 }
 
-if (environment === "DEVELOPMENT") {
-    mongoose.connect('mongodb://localhost/test', options);
+if (process.env.ENVIRONMENT === "DEVELOPEMENT") {
+    mongoose.connect('mongodb://localhost:27017/test', options);
 } else {
     try {
         mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', options)
@@ -68,8 +69,6 @@ app.post('/api/products', [authenticated, multerUploads, ProductUpload], async (
 
 app.post('/signup', signup)
 app.post('/login', signin)
-app.get('/migrate', migrate)
-// app.delete('logout',logout)
 app.use('/api/products', ProductRoutes)
 app.use('/api/orders', OrderRoutes)
 app.use('/api/users', usersRoutes.UserRouter)

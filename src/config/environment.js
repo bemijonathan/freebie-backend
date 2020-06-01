@@ -1,1 +1,1 @@
-export const environment = "DEVELOPMENT"
+export const environment = process.env.ENVIRONMENT
