@@ -12,7 +12,7 @@ GET : http://yourserver/api/products
 pagination
 GET: http://yourserver/api/products?page=1
 
-```js
+```javascript
 	{
 		"data":[
 			{
