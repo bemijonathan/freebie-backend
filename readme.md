@@ -31,6 +31,6 @@ GET: http:yourserver/api/products?page=1
 		"page":0
 	}
 	
-````
+```
 
 
