@@ -1,11 +1,11 @@
 ## backend for freeBie Ecommerce Site
 
 
-# get all Products 
-GET : http:yourserver/api/products
-
-pagination
-GET: http:yourserver/api/products?page=1
+# Products 
+* all products `GET` http:yourserver/api/products
+* pagination `GET` http:yourserver/api/products?page=1
+* single product `GET` http:yourserver/api/product/:id
+# 
 
 ```js
 	{
@@ -18,7 +18,7 @@ GET: http:yourserver/api/products?page=1
 			 "images":[
 			 	{
 			 	"id":"5ed007e74c2e14358da8769d",
-			 	 "img":"http://res.cloudinary.com/mixedcode/image/upload/v1590691815/zn51zaymevilamrhsldn.jpg",
+			 	 "img":"http://url",
 			 	 "public_id":"zn51zaymevilamrhsldn"
 			 	}
 			 ],
