@@ -1,5 +1,9 @@
 ## backend for freeBie Ecommerce Site
 
+npm install
+
+configure your environment variable
+## Endpoints
 
 # Products 
 * all products `GET` http:yourserver/api/products
@@ -7,7 +11,7 @@
 * single product `GET` http:yourserver/api/product/:id
 # 
 
-```js
+```javascript
 	{
 		"data":
 		[
