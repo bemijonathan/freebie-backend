@@ -10,15 +10,16 @@ const generateToken = (user) => {
     return jwt.sign({ id: user._id }, "config_key", { expiresIn: "24h" });
 };
 
-const verifyToken = (token) => {
+const verifyToken = async (token) => {
     let id;
-    jwt.verify(token, "config_key", function (err, decoded) {
-        if (err) {
-            throw new Error(err);
-        }
+    try {
+        const decoded = await jwt.verify(token, "config_key")
         console.log(decoded);
         id = decoded.id;
-    });
+        return id
+    } catch (err) {
+        if (err) throw new Error(err)
+    }
     return id.toString();
 };
 
