@@ -6,7 +6,7 @@ import chalk from "chalk";
 // console.log(config.secret_key);
 
 const generateToken = (user) => {
-    console.log(config_key);
+    console.log(config_key, "config key");
     return jwt.sign({ id: user._id }, "config_key", { expiresIn: "24h" });
 };
 
