@@ -1,3 +1,3 @@
-export default {
-    secret_key:process.env.JWT_SECRET_KEY
-}
+const keys = process.env.JWT_SECRET_KEY;
+
+export default keys;

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -8,29 +8,29 @@ const UserSchema = new mongoose.Schema({
     photo: { type: String },
     products: {
         type: [mongoose.SchemaTypes.ObjectId],
-        ref: 'Product'
-    }
-})
+        ref: "Product",
+    },
+});
 
-UserSchema.methods.comparePassword = async (password) => {
+UserSchema.methods.comparePassword = async (password, user) => {
+    console.log(this);
     try {
-        const match = await bcrypt.compare(password, this.password);
-        return match
+        const match = await bcrypt.compare(password, user.password);
+        return match;
     } catch (error) {
-        console.error(error)
-        throw new Error(error)
+        console.error(error);
+        throw new Error(error);
     }
-}
+};
 
-UserSchema.pre('save', async function (next) {
+UserSchema.pre("save", async function (next) {
     try {
-        let hashedPassword = await bcrypt.hash(this.password, 10)
-        this.password = hashedPassword
-        next()
+        let hashedPassword = await bcrypt.hash(this.password, 10);
+        this.password = hashedPassword;
+        next();
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
+});
 
-})
-
-export const User = mongoose.model('User', UserSchema)
+export const User = mongoose.model("User", UserSchema);
