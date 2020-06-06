@@ -6,7 +6,7 @@ import { Product } from "../products/product.model";
 const OrderSchema = new mongoose.Schema({
     products: {
         type: [{ product: mongoose.SchemaTypes.ObjectId, qty: Number }],
-        refs: "product",
+        ref: "products",
     },
     OrderdBy: {
         type: mongoose.SchemaTypes.ObjectId,
