@@ -13,7 +13,6 @@ export default {
             let final = await response.save();
             console.log(final);
         } catch (error) {
-            console.log(chalk.redBright.bold(error));
             if (error) return res.status(400).json(error);
         }
         res.status(201).send({ data: response });

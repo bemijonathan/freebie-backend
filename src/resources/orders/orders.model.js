@@ -54,22 +54,26 @@ const OrderSchema = new mongoose.Schema({
 });
 
 OrderSchema.pre("save", async function (next) {
-    console.log(chalk.bold.greenBright(this));
     let ids = this.products.map((e) => mongoose.Types.ObjectId(e.product));
+
     this.shippingFee = deliveryPrices[this.shippingLocation];
-    if (typeof this.shippingFee === "number") {
-        const Products = await Product.find({ _id: [...ids] });
-        let total = Products.map((e) => {
-            return { id: e.id, cost: e.cost };
-        });
-        let totalSum = this.products.map((e) => {
-            console.log(e.product);
+
+    if (this.shippingFee) {
+        const total = await Product.find({ _id: [...ids] }).select("id cost");
+
+        console.log(total, "********************");
+
+        const sum = [];
+
+        for (const e of this.products) {
             let product = total.find((p) => {
                 return JSON.stringify(p.id) === JSON.stringify(e.product);
             });
-            return (e.sum = e.qty * product.cost);
-        });
-        this.total = totalSum.reduce((e, c) => e.sum + c.sum);
+
+            let sumqty = e.qty * product.cost;
+            sum.push(sumqty);
+        }
+        this.total = sum.reduce((e, c) => +e + +c);
         this.totalBill = this.total + this.shippingFee;
         next();
     } else {
