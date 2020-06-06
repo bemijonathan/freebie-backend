@@ -69,9 +69,12 @@ OrderSchema.pre("save", async function (next) {
             });
             return (e.sum = e.qty * product.cost);
         });
-        this.total = totalSum.reduce((e, c) => e.sum + c.sum);
+        this.total = totalSum.reduce((e, c) => {
+            return e.sum + c.sum;
+        });
         this.totalBill = this.total + this.shippingFee;
         next();
+        z;
     } else {
         throw new Error("Did You select a location in our List");
     }
