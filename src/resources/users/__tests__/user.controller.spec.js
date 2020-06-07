@@ -1,27 +1,26 @@
-import mongoose from "mongoose";
-import { User } from "../users.model";
-import bcrypt from "bcrypt";
-// beforeEach(() => {
+import controller from "../users.controllers";
+import response from "res";
 
-// })
+const { getOne, updateOne, getMany } = controller;
 
-describe("User Model", () => {
-	it("user test is created and password is hashed", async () => {
-		await mongoose.connect("mongodb://localhost/test-env", {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		});
-
-		const user = {
-			email: "bemijonath@gmail.com",
-			password: "password",
-			name: "Jonathan iene",
+describe("Crud action on users", () => {
+	test("create user should return status 200", async () => {
+		const req = {
+			params: {
+				id: 1,
+			},
 		};
 
-		const userdetails = await User.create(user);
-		const match = await bcrypt.compare(user.password, userdetails.password);
-		expect(userdetails).toHaveProperty("id");
+		const getOne = jest.fn();
 
-		expect(match).toBeTruthy();
+		const res = new response();
+
+		const StatusSpy = jest.spyOn(res, "status");
+		const JsonSpy = jest.spyOn(res, "json");
+
+		await getOne(req, res);
+
+		expect(getOne).toHaveBeenCalled();
+		expect(res).toHaveBeenCalled();
 	});
 });

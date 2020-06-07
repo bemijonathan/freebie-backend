@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "rimraf dist && jest",
     "build": "npx babel src -d dist",
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon --exec npm run restart",
