@@ -27,7 +27,7 @@ export default {
         try {
             const Item = await Product.findById(req.params.id)
 
-            console.log("prosuct", Item)
+            console.log("product", Item)
 
             uploader.destroy(Item.images[req.params.image_id].public_id, function (response) {
                 console.log(response)

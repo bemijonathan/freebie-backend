@@ -10,7 +10,8 @@
     "dev": "nodemon --exec npm run restart",
     "restart": "rimraf dist && npm run start",
     "heroku-postbuild": "npm run build",
-    "test-coverage": "jest --coverage"
+    "test-coverage": "jest --coverage",
+    "test-watch":"jest --watch"
   },
   "author": "",
   "license": "ISC",

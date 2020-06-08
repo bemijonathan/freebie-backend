@@ -1,25 +1,15 @@
 import mongoose from "mongoose";
 import { User } from "../users.model";
+import {connect, closeConnection, dropDatabase, user} from "dbsetup"
 import bcrypt from "bcrypt";
-// beforeEach(() => {
 
-// })
 
 describe("User Model", () => {
 	let connection;
-	const user = {
-		email: "bemijonath@gmail.com",
-		password: "password",
-		name: "Jonathan iene",
-	};
 	let userdetails;
 
 	beforeAll(async () => {
-		connection = await mongoose.connect("mongodb://localhost/testnv", {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		});
-
+		connection = await connect()
 		userdetails = await User.create(user);
 	});
 
@@ -29,8 +19,8 @@ describe("User Model", () => {
 		expect(match).toBeTruthy();
 	});
 
-	afterAll(() => {
-		connection.connection.db.dropDatabase();
-		mongoose.connection.close();
+	afterAll(async () => {
+		dropDatabase(connection);
+		closeConnection()
 	});
 });
