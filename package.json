@@ -9,7 +9,8 @@
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon --exec npm run restart",
     "restart": "rimraf dist && npm run start",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "test-coverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
