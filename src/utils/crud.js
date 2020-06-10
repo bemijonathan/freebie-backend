@@ -15,12 +15,13 @@ export const createOne = (model) => async (req, res) => {
 
 export const getMany = (model) => async (req, res) => {
     try {
-        let page = req.query.page;
+        let page = +req.query.page;
         if (+req.query.page === 1) page = 0;
-        if (!req.query.page) page = 0;
+        if (!+req.query.page) page = 0;
+        console.log(page)
         const docs = await model
             .find()
-            .skip(+page * 8)
+            .skip((page === 0 ? 0 : page - 1) * 8)
             .limit(8)
             .lean()
             .exec();
