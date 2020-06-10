@@ -21,7 +21,7 @@ export const getMany = (model) => async (req, res) => {
         const docs = await model
             .find()
             .skip(+page * 8)
-            .limit(10)
+            .limit(8)
             .lean()
             .exec();
         console.log(docs);
