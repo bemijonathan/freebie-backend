@@ -24,16 +24,19 @@ const options = {
     useFindAndModify: false
 }
 
-if (process.env.ENVIRONMENT === "DEVELOPEMENT") {
-    mongoose.connect('mongodb://localhost/test', options);
-} else {
-    try {
-        mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', options)
-    } catch (error) {
-        console.log(chalk.bgGreenBright.bold(error))
-    }
+export const db = async () => {
+  if (process.env.ENVIRONMENT === "DEVELOPEMENT") {
+       await  mongoose.connect('mongodb://localhost/test', options);
+  } else {
+      try {
+          await mongoose.connect('mongodb+srv://jona:jona@freebie-pckhz.mongodb.net/test', options)
+      } catch (error) {
+          console.log(chalk.bgGreenBright.bold(error))
+      }
+  }
 }
 
+db()
 
 const app = express()
 app.use(cors())
@@ -97,5 +100,3 @@ export default app
 
 // import { uploader, cloudinaryConfig } from './config/cloudinaryConfig'
 // import { multerUploads, dataUri } from './middlewares/multerUpload';
-
-

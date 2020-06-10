@@ -11,13 +11,18 @@ describe("test Order Model", () => {
   let singleOrder;
 
   beforeAll(async() => {
-    connection = await connect()
-    const userdetails = await User.create({...user, email:"jonathan11@gmail", name:"john doe"});
-    for(let i = 0; i <= 2; i ++){
-      const productOne = await Product.create({...product, createdBy: userdetails.id})
-      productIds.push({ product: productOne.id, qty: Math.floor(Math.random() * 10) })
+    try {
+      connection = await connect()
+      const userdetails = await User.create({...user, email:"jonathan11@gmail", name:"john doe"});
+      for(let i = 0; i <= 2; i ++){
+        const productOne = await Product.create({...product, createdBy: userdetails.id})
+        productIds.push({ product: productOne.id, qty: Math.floor(Math.random() * 10) })
+      }
+      singleOrder = await Order.create({ ...orders,products:[...productIds] })
+    } catch (e) {
+      console.log(e);
     }
-    singleOrder = await Order.create({ ...orders,products:[...productIds] })
+
   })
 
   test("multiple products orders and qty is created",() => {

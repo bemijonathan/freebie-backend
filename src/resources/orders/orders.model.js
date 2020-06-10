@@ -51,7 +51,7 @@ const OrderSchema = new mongoose.Schema({
         default: false,
         required: true,
     },
-});
+}, {timestamps:true});
 
 OrderSchema.pre("save", async function (next) {
     let ids = this.products.map((e) => mongoose.Types.ObjectId(e.product));

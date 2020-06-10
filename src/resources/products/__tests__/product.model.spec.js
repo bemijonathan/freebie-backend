@@ -12,19 +12,29 @@ describe("Prouduct Model", () => {
   })
 
   test("product properties will be present when created", async () => {
-    const userdetails = await User.create({...user, email:"jonathan@gmail", name:"john"});
-    product.createdBy = userdetails._id
-    productdetails =  await Product.create(product)
-    expect(productdetails).toHaveProperty("name","brown bed");
-    expect(productdetails).toHaveProperty("_id")
-    expect(productdetails).toHaveProperty("createdBy")
-    expect(productdetails).toHaveProperty(["images", 0, "img"])
-    expect(productdetails).toHaveProperty("cost", 500)
-    expect(productdetails).toHaveProperty("shortDescription")
+    try {
+      const userdetails = await User.create({...user, email:"jonathan@gmail", name:"john"});
+      product.createdBy = userdetails._id
+      productdetails =  await Product.create(product)
+      expect(productdetails).toHaveProperty("name","brown bed");
+      expect(productdetails).toHaveProperty("_id")
+      expect(productdetails).toHaveProperty("createdBy")
+      expect(productdetails).toHaveProperty(["images", 0, "img"])
+      expect(productdetails).toHaveProperty("cost", 500)
+      expect(productdetails).toHaveProperty("shortDescription")
+    } catch (e) {
+      console.log(e);
+    }
+
   })
 
   afterAll(async() => {
-    dropDatabase(connection)
-    closeConnection();
+    try {
+      dropDatabase(connection)
+      closeConnection();
+    } catch (e) {
+      console.log(e)
+    }
+
   })
 })
